@@ -14,11 +14,6 @@ const MAX_OCCUPANCY = 5;  // Maximum number of people allowed per time slot
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from the React build directory in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-}
-
 // Email transporter setup
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -215,13 +210,6 @@ app.delete('/api/admin/bookings/:id', (req, res) => {
 });
 
 // TODO: Add booking routes here
-
-// Handle React routing in production
-if (process.env.NODE_ENV === 'production') {
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-  });
-}
 
 app.listen(PORT, HOST, () => {
   console.log(`Server running on http://${HOST}:${PORT}`);

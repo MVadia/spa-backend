@@ -166,6 +166,18 @@ app.get('/api/availability', (req, res) => {
   });
 });
 
+// Public GET endpoint to view all bookings (for testing/demo only, remove in production if not needed)
+app.get('/api/bookings', (req, res) => {
+  const getAllBookings = `SELECT * FROM bookings ORDER BY date DESC, time ASC`;
+  db.all(getAllBookings, [], (err, rows) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.json(rows);
+  });
+});
+
 // Admin endpoint to view all bookings
 app.get('/api/admin/bookings', (req, res) => {
   const adminKey = process.env.ADMIN_KEY;
